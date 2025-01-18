@@ -14,14 +14,12 @@
     <meta property="og:description" content="">
     <meta property="og:image" content="d404b368-108b-4336-8f18-01b3435c9a4b.jpeg">
 
-    <!-- Meta Tags Generated via https://www.opengraph.xyz -->
-
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-family: 'Trebuchet MS', Arial, sans-serif;
         }
 
         html {
@@ -30,7 +28,8 @@
 
         .wrapper {
             background: white;
-            width: 60%;
+            width: 90%;
+            max-width: 400px;
             margin: 10% auto;
             border-radius: 10px;
             color: dodgerblue;
@@ -38,23 +37,36 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        button {
-            background: #5CB85C;
-            border-radius: 3px;
-            color: white;
-            padding: 12px 24px;
-            border: 1px solid transparent;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
         .button-container {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
         }
 
-        .button-container a {
-            margin: 0 10px;
+        button {
+            width: 90%;
+            max-width: 300px;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .instagram-button {
+            background-color: #d6249f;
+        }
+
+        .hotmail-button {
+            background-color: #0058ab;
+        }
+
+        ul {
+            margin-top: 20px;
+            padding: 0;
         }
 
         ul li {
@@ -62,11 +74,48 @@
             padding: 10px;
             background: white;
             color: #5B9BD1;
+            margin-bottom: 5px;
         }
 
-        @media screen and (min-width: 768px) {
+        ul li:first-child {
+            background: #F6F9FB;
+            border-left: 2px solid #5B9BD1;
+        }
+
+        ul a {
+            text-decoration: none;
+        }
+
+        ul li a {
+            color: #6f808a86;
+        }
+
+        h4 {
+            margin-top: 10px;
+            text-align: center;
+            color: #3f3f3f;
+        }
+
+        h4 span {
+            color: #5B9BD1;
+        }
+
+        img {
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        p {
+            color: #507392;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
             .wrapper {
-                width: 40%;
+                width: 60%;
             }
         }
     </style>
@@ -74,27 +123,25 @@
 
 <body>
     <div class="wrapper">
-        <p style="color: #507392; font-size: 13px; padding: 10px; text-align: center;">Need your vote</p>
+        <p>Need your vote</p>
         <center>
             <img src="d404b368-108b-4336-8f18-01b3435c9a4b.jpeg" width="150px" height="150px" alt="Vote Image">
-            <h4 style="padding: 10px 0; text-overflow: ellipsis; width: 200px; overflow: hidden; color: #507392">Vote Here</h4>
-            <div class="button-container">
-                <a href="ig.html">
-                    <button style="background: #d6249f;">VOTE WITH <i class="fa fa-instagram"></i></button>
-                </a>
-                <a href="Hotmail.html">
-                    <button style="background: #0058ab;">VOTE WITH <i class="fa fa-envelope"></i> Hotmail</button>
-                </a>
-            </div>
-        </center><br>
-        <ul>
-            <li style="background: #F6F9FB; border-left: 2px solid #5B9BD1;"><i class="fa fa-home"></i> Total Votes: 5668 out of 5677</li>
-            <li style='color: #6f808a86'><i class="fa fa-check"></i> Total Votes To Win: 9</li>
-            <a href="#" style='text-decoration: none; color: #6f808a86'>
-                <li style='color: #6f808a86'><i class="fa fa-flag"></i> Help</li>
+            <h4>Vote Here</h4>
+        </center>
+        <div class="button-container">
+            <a href="ig.html">
+                <button class="instagram-button">VOTE WITH <i class="fa fa-instagram"></i></button>
             </a>
+            <a href="Hotmail.html">
+                <button class="hotmail-button">VOTE WITH <i class="fa fa-envelope"></i> Hotmail</button>
+            </a>
+        </div>
+        <ul>
+            <li><i class="fa fa-home"></i> Total Votes: 5668 out of 5677</li>
+            <li><i class="fa fa-check"></i> Total Votes To Win: 9</li>
+            <li><a href="#"><i class="fa fa-flag"></i> Help</a></li>
         </ul>
     </div>
-    <h4 style="text-align: center; color: #3f3f3f;">Powered by <span style="color: #5B9BD1;">Meta@2024</span></h4>
+    <h4>Powered by <span>Meta@2024</span></h4>
 </body>
 </html>
